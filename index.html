@@ -3,132 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>【出租/出售】台東成功鎮優質土地 - 電腦/手機雙版本</title>
+    <title>土地租賃詳細資訊 | 台東成功鎮</title>
     <style>
-        :root { --primary: #2c3e50; --accent: #27ae60; --bg: #f8f9fa; --text: #333; }
-        body { font-family: "Microsoft JhengHei", sans-serif; margin: 0; padding: 0; background: var(--bg); line-height: 1.6; }
-        
-        /* 基礎容器 */
-        .main-wrapper { max-width: 1200px; margin: 0 auto; background: white; min-height: 100vh; display: flex; flex-direction: column; }
-        
-        header { background: var(--primary); color: white; padding: 40px 20px; text-align: center; }
-        .price { font-size: 1.8rem; font-weight: bold; color: #f1c40f; }
-
-        /* --- 響應式佈局核心 --- */
-        .content-layout { 
-            display: grid; 
-            grid-template-columns: 1fr; /* 手機預設一欄 */
-            gap: 20px; 
-            padding: 20px; 
+        /* 【全域變數】定義顏色與風格 */
+        :root {
+            --主色: #2c3e50;
+            --次色: #34495e;
+            --強調色: #27ae60;
+            --警示色: #e74c3c;
+            --背景色: #f8f9fa;
+            --文字色: #333;
         }
 
-        /* 當螢幕寬度 > 1024px 時切換成兩欄 */
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+            background-color: var(--背景色);
+            color: var(--文字色);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+        /* 【標題區】 */
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        header h1 { margin: 0; color: var(--主色); font-size: 1.8rem; }
+        .price-badge {
+            display: inline-block;
+            background: var(--強調色);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* 【核心佈局】電腦版兩欄，手機版一欄 */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
         @media (min-width: 1024px) {
-            .content-layout {
-                grid-template-columns: 1.2fr 0.8fr; /* 左寬右窄 */
-                align-items: start;
-            }
-            .sidebar {
-                position: sticky;
-                top: 20px; /* 右側欄會隨著捲動停留在頂部 */
-            }
-            header { text-align: left; padding: 60px 40px; }
+            .main-layout { grid-template-columns: 1.5fr 1fr; }
         }
 
-        /* 共用區塊樣式 */
-        .section { background: #fff; padding: 25px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 20px; }
-        h2 { border-left: 5px solid var(--accent); padding-left: 12px; margin-top: 0; font-size: 1.4rem; }
-        
-        .grid-box { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #f9f9f9; padding: 15px; border-radius: 8px; }
-        .grid-item span { display: block; font-size: 0.8rem; color: #666; }
+        /* 【CSS 互動式頁籤 (Tabs)】核心邏輯 */
+        .tab-wrapper {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
 
-        .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .media-container { width: 100%; height: 200px; background: #eee; border-radius: 8px; overflow: hidden; }
-        iframe, img { width: 100%; height: 100%; object-fit: cover; border: 0; }
+        /* 隱藏真正的 radio 按鈕 */
+        .tab-wrapper input[type="radio"] { display: none; }
 
-        .alert-box { background: #fff5f5; border-left: 4px solid #e74c3c; padding: 15px; border-radius: 4px; }
-        
-        /* 聯絡按鈕 */
-        .contact-area { display: flex; gap: 10px; margin-top: 20px; }
-        .btn { flex: 1; text-align: center; padding: 15px; border-radius: 8px; text-decoration: none; font-weight: bold; color: white; }
-        .btn-line { background: #06c755; }
-        .btn-tel { background: #3498db; }
+        /* 頁籤按鈕樣式 */
+        .tab-menu {
+            display: flex;
+            background: #eee;
+            border-bottom: 1px solid #ddd;
+        }
+        .tab-menu label {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            color: #666;
+        }
+        .tab-menu label:hover { background: #e0e0e0; }
 
-        /* 手機版底部選單 (僅在小螢幕顯示) */
-        .mobile-only-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 10px; display: flex; gap: 10px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 1000; }
-        @media (min-width: 1024px) { .mobile-only-bar { display: none; } }
+        /* 選中狀態的樣式 (當 input 被 checked 時，對應的 label 變色) */
+        #tab1:checked ~ .tab-menu label[for="tab1"],
+        #tab2:checked ~ .tab-menu label[for="tab2"],
+        #tab3:checked ~ .tab-menu label[for="tab3"] {
+            background: white;
+            color: var(--強調色);
+            border-top: 3px solid var(--強調色);
+        }
+
+        /* 內容區塊隱藏/顯示邏輯 */
+        .tab-content { display: none; padding: 25px; min-height: 400px; }
+        #tab1:checked ~ #content1,
+        #tab2:checked ~ #content2,
+        #tab3:checked ~ #content3 { display: block; }
+
+        /* 【資料顯示樣式】 */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .info-item { margin-bottom: 15px; border-bottom: 1px solid #f0f0f0; padding-bottom: 8px; }
+        .info-item label { font-size: 0.85rem; color: #888; display: block; }
+        .info-item span { font-size: 1.05rem; font-weight: bold; color: var(--次色); }
+
+        /* 【警告/規則樣式】 */
+        .rules-list { list-style: none; padding: 0; }
+        .rules-list li {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            background: #fdf2f2;
+            border-left: 4px solid var(--警示色);
+        }
+        .rules-list li.allow { background: #f2fdf5; border-left-color: var(--強調色); }
+
+        /* 【側邊欄地圖】 */
+        .sticky-sidebar { position: sticky; top: 20px; }
+        .card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .map-box { height: 300px; background: #eee; border-radius: 8px; overflow: hidden; margin-bottom: 15px; }
+
+        /* 【聯絡按鈕】 */
+        .btn {
+            display: block; width: 100%; padding: 15px; text-align: center;
+            border-radius: 8px; text-decoration: none; font-weight: bold; margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        .btn-line { background: #06c755; color: white; }
+        .btn-phone { border: 2px solid var(--主色); color: var(--主色); }
+
+        /* 讓地圖下方的連結強制換行，並增加一點間距 */
+        .map-link-stacked {
+            display: block;    /* 變成區塊元素，就會自動換行 */
+            margin-top: 10px;  /* 增加跟上方元素的間距 */
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
 
-<div class="main-wrapper">
+<div class="container">
     <header>
-        <h1>台東成功鎮・三仙台海景休閒農地</h1>
-        <div class="price">月租：$5,000 元</div>
+        <h1>台東成功鎮・三仙台旁優質農地</h1>
+        <div class="price-badge">租金：NT$ 5,000 / 月 (等值年租 6 萬)</div>
     </header>
 
-    <div class="content-layout">
-        <main class="main-content">
-            <div class="section">
-                <h2>物件摘要</h2>
-                <div class="grid-box">
-                    <div class="grid-item"><span>坪數</span><strong>150 坪</strong></div>
-                    <div class="grid-item"><span>分區</span><strong>農牧用地</strong></div>
-                    <div class="grid-item"><span>最短租期</span><strong>一年</strong></div>
-                    <div class="grid-item"><span>押金</span><strong>兩個月</strong></div>
-                </div>
-            </div>
+    <div class="main-layout">
+        <main>
+            <div class="tab-wrapper">
+                <input type="radio" name="tabs" id="tab1" checked>
+                <input type="radio" name="tabs" id="tab2">
+                <input type="radio" name="tabs" id="tab3">
 
-            <div class="section">
-                <h2>使用規則</h2>
-                <div class="alert-box">
-                    <strong>禁止傾倒廢棄物、嚴禁非法轉租、不開放高污染用途。</strong>
+                <div class="tab-menu">
+                    <label for="tab1">📍 產權與基本資料</label>
+                    <label for="tab2">📜 租賃與規則</label>
+                    <label for="tab3">💡 現況與 FAQ</label>
                 </div>
-                <ul style="margin-top:15px;">
-                    <li>適合：資材堆放、假日耕作、放置貨櫃屋。</li>
-                    <li>需自行負擔水電申請費用，地主可配合簽文件。</li>
-                </ul>
-            </div>
 
-            <div class="section">
-                <h2>常見問答 FAQ</h2>
-                <p><strong>Q：大車進得來嗎？</strong><br>A：3.5噸小貨車沒問題，聯結車不建議。</p>
-                <p><strong>Q：可以改賣嗎？</strong><br>A：目前以出租為主，若有誠意購買可私訊談價。</p>
+                <div class="tab-content" id="content1">
+                    <div class="info-grid">
+                        <div class="info-item"><label>縣市鄉鎮</label><span>台東縣成功鎮</span></div>
+                        <div class="info-item"><label>總面積</label><span>150 坪 (約 0.5 分)</span></div>
+                        <div class="info-item"><label>使用分區</label><span>一般農業區</span></div>
+                        <div class="info-item"><label>使用地類別</label><span>農牧用地</span></div>
+                        <div class="info-item"><label>道路寬度</label><span>臨 4 米道路 (小貨車可達)</span></div>
+                        <div class="info-item"><label>座標位置</label><span>23.1234, 121.5678</span></div>
+                    </div>
+                    <hr>
+                    <h3>重點說明</h3>
+                    <p>本土地產權清楚，無設定抵押。界址以現場水泥樁為準。適合長期農作、資材存放或假日休閒使用。</p>
+                </div>
+
+                <div class="tab-content" id="content2">
+                    <div class="info-grid">
+                        <div class="info-item"><label>最短租期</label><span>一年 (可續租)</span></div>
+                        <div class="info-item"><label>押金</label><span>兩個月 (NT$ 10,000)</span></div>
+                        <div class="info-item"><label>付款方式</label><span>每半年支付一次</span></div>
+                        <div class="info-item"><label>可起租日</label><span>隨時，現狀交屋</span></div>
+                    </div>
+                    
+                    <h3>🚫 禁止事項 (嚴格執行)</h3>
+                    <ul class="rules-list">
+                        <li>嚴禁傾倒、填埋廢棄物或不明土方 (違者報警並解約)。</li>
+                        <li><strong>禁止轉租</strong>、出借或變相讓與第三人使用。</li>
+                        <li>不得從事非法活動或高污染儲放。</li>
+                    </ul>
+
+                    <h3>✅ 施工與維護</h3>
+                    <ul class="rules-list">
+                        <li class="allow">蓋資材室、圍籬、整地：<strong>需經地主書面同意</strong>。</li>
+                        <li class="allow">期滿原則：需清除私人物件，<strong>恢復原狀</strong>。</li>
+                    </ul>
+                </div>
+
+                <div class="tab-content" id="content3">
+                    <h3>水電現況</h3>
+                    <p>● <strong>電力：</strong>附近 50 米有電桿，地主可配合簽同意書，由承租人負擔申請規費。<br>
+                       ● <strong>水源：</strong>現狀有山泉水管線，需自行維修與拉接。</p>
+                    
+                    <h3>環境現況</h3>
+                    <p>目前地勢平坦，已完成除草。排水良好，去年強風大雨無淹水紀錄。</p>
+                    
+                    <hr>
+                    <h3>常見問題 FAQ</h3>
+                    <p><strong>Q: 可以放貨櫃屋嗎？</strong><br>A: 在不固著於地面、且不違反法規前提下，經地主同意後可放置。</p>
+                    <p><strong>Q: 租約可以公證嗎？</strong><br>A: 歡迎公證，公證費用由雙方平分或承租人負擔。</p>
+                </div>
             </div>
         </main>
 
-        <aside class="sidebar">
-            <div class="section">
-                <h2>位置地圖</h2>
-                <div class="media-container" style="height: 250px;">
-                    <iframe src="https://www.google.com/maps/embed?pb=..."></iframe>
+        <aside class="sticky-sidebar">
+            <div class="card">
+                <h3>地點導航</h3>
+                <div class="map-box">
+                    <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1xM_PD6riEkE4Yovet2p5hnCpw-eCZrA&ehbc=2E312F" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
-            </div>
+                    <a href="https://maps.app.goo.gl/Vjg37SFXQ2wX9Jrw7" target="_blank" class="map-link-stacked" style="color:var(--強調色); font-size: 0.9rem;">📍 開啟 Google Maps 導航</a>
+                    <a href="https://www.google.com/maps/d/u/0/embed?mid=1xM_PD6riEkE4Yovet2p5hnCpw-eCZrA&ehbc=2E312F" target="_blank" class="map-link-stacked" style="color:var(--強調色); font-size: 0.9rem;">📍 全視窗對照圖</a>            </div>
 
-            <div class="section">
-                <h2>現場照片</h2>
-                <div class="gallery">
-                    <div class="media-container"><img src="https://via.placeholder.com/400x300?text=照片1" alt="照片"></div>
-                    <div class="media-container"><img src="https://via.placeholder.com/400x300?text=照片2" alt="照片"></div>
-                    <div class="media-container"><img src="https://via.placeholder.com/400x300?text=照片3" alt="照片"></div>
-                    <div class="media-container"><img src="https://via.placeholder.com/400x300?text=照片4" alt="照片"></div>
-                </div>
-            </div>
-
-            <div class="section contact-pc">
-                <h2>立即聯絡地主</h2>
-                <div class="contact-area">
-                    <a href="https://line.me/ti/p/你的ID" class="btn btn-line">加 LINE</a>
-                    <a href="tel:0912345678" class="btn btn-tel">打電話</a>
-                </div>
+            <div class="card">
+                <h3>聯絡地主</h3>
+                <p style="font-size: 0.85rem; color:#666;">詢問時請主動告知：預計用途、承租人數、預計租期。</p>
+                <a href="https://line.me/ti/p/你的ID" class="btn btn-line">💬 LINE 線上詢問</a>
+                <a href="tel:0912345678" class="btn btn-phone">📞 撥打電話</a>
             </div>
         </aside>
     </div>
-</div>
-
-<div class="mobile-only-bar">
-    <a href="https://line.me/ti/p/你的ID" class="btn btn-line">LINE 聯繫</a>
-    <a href="tel:0912345678" class="btn btn-tel">打電話</a>
 </div>
 
 </body>
