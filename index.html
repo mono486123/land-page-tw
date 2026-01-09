@@ -1,1 +1,151 @@
-"" 
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【出租/出售】台東成功鎮優質農地 - 資訊頁</title> <meta name="description" content="詳細土地資訊、路況、水電現況與租賃條件。">
+    <style>
+        /* --- 基礎設定 (不需修改) --- */
+        :root { --primary: #2c3e50; --accent: #27ae60; --bg: #f8f9fa; --text: #333; }
+        body { font-family: "Microsoft JhengHei", -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 80px; }
+        
+        /* --- 版面結構 --- */
+        .container { max-width: 800px; margin: 0 auto; background: white; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
+        .section { padding: 25px 20px; border-bottom: 1px solid #eee; }
+        h2 { border-left: 5px solid var(--accent); padding-left: 12px; font-size: 1.25rem; color: var(--primary); margin-top: 0; }
+        h3 { font-size: 1.1rem; margin-bottom: 5px; color: #555; }
+        
+        /* --- 頂部英雄區 --- */
+        header { background: var(--primary); color: white; padding: 40px 20px; text-align: center; }
+        header h1 { margin: 0 0 10px 0; font-size: 1.8rem; }
+        .tag { display: inline-block; background: var(--accent); padding: 4px 10px; border-radius: 4px; font-size: 0.9rem; margin-top: 10px; }
+        .price { font-size: 1.5rem; font-weight: bold; color: #f1c40f; margin-top: 15px; display: block; }
+
+        /* --- 資訊卡片格線 --- */
+        .grid-box { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f1f8e9; padding: 15px; border-radius: 8px; margin-top: 10px; }
+        .grid-item span { display: block; font-size: 0.85rem; color: #666; }
+        .grid-item strong { font-size: 1.1rem; color: #000; }
+
+        /* --- 重點特色清單 --- */
+        ul.check-list { list-style: none; padding: 0; }
+        ul.check-list li { margin-bottom: 8px; padding-left: 25px; position: relative; }
+        ul.check-list li::before { content: "✔"; color: var(--accent); position: absolute; left: 0; font-weight: bold; }
+        
+        /* --- 限制與規則 (紅字警示) --- */
+        .alert-box { background: #fff5f5; border-left: 4px solid #e74c3c; padding: 15px; color: #c0392b; font-size: 0.95rem; }
+
+        /* --- 地圖與圖片 --- */
+        .media-container { width: 100%; height: 300px; background: #ddd; position: relative; margin-bottom: 15px; border-radius: 8px; overflow: hidden; }
+        iframe, img { width: 100%; height: 100%; object-fit: cover; border: 0; }
+        .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+        /* --- FAQ 區塊 --- */
+        .faq-item { margin-bottom: 15px; }
+        .faq-q { font-weight: bold; color: var(--primary); cursor: pointer; }
+        .faq-a { font-size: 0.95rem; color: #555; margin-top: 5px; }
+
+        /* --- 底部懸浮按鈕 --- */
+        .action-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 10px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); display: flex; gap: 10px; z-index: 100; max-width: 800px; margin: 0 auto; }
+        .btn { flex: 1; text-align: center; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: bold; color: white; display: flex; justify-content: center; align-items: center; }
+        .btn-line { background: #06c755; }
+        .btn-tel { background: #3498db; }
+        
+        /* 手機版優化 */
+        @media (max-width: 600px) {
+            .grid-box { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <header>
+        <h1>台東成功鎮・海景休閒農地</h1> <div class="tag">適合：倉儲 / 假日農夫 / 資材堆放</div> <span class="price">租金：$5,000 / 月 (誠可議)</span> </header>
+
+    <div class="section">
+        <h2>物件摘要</h2>
+        <div class="grid-box">
+            <div class="grid-item"><span>坪數面積</span><strong>150 坪</strong></div> <div class="grid-item"><span>使用分區</span><strong>一般農業區 / 農牧用地</strong></div> <div class="grid-item"><span>現況</span><strong>已整地，有平台</strong></div> <div class="grid-item"><span>最短租期</span><strong>一年</strong></div> </div>
+    </div>
+
+    <div class="section">
+        <h2>現況與特色</h2>
+        <ul class="check-list">
+            <li><strong>水電狀況：</strong>目前無電（電桿在 50 米處），有山泉水管線經過。</li>
+            <li><strong>道路狀況：</strong>臨 4 米產業道路，小貨車(3.5噸)可達，大車需技術。</li>
+            <li><strong>地形地勢：</strong>緩坡，中間有一塊 30 坪平坦地可利用。</li>
+            <li><strong>周邊環境：</strong>安靜無鄰居干擾，可看到三仙台海景。</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>租賃規則 (請詳閱)</h2>
+        <div class="alert-box">
+            <p>❌ <strong>嚴禁事項：</strong></p>
+            <ul>
+                <li>禁止傾倒任何廢棄物或土方。</li>
+                <li>禁止非法賭博或違法倉儲使用。</li>
+                <li>禁止轉租給第三人。</li>
+            </ul>
+            <p>⭕ <strong>允許事項：</strong></p>
+            <ul>
+                <li>可搭建資材室 (需協助配合申請)。</li>
+                <li>可停放車輛或放置貨櫃 (不固著)。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>現場照片</h2>
+        <p style="font-size:0.9rem; color:#666;">點擊可放大查看 (建議放 4-6 張)</p>
+        <div class="gallery">
+            <div class="media-container"><img src="https://via.placeholder.com/400x300?text=入口道路狀況" alt="入口道路"></div>
+            <div class="media-container"><img src="https://via.placeholder.com/400x300?text=土地平坦處" alt="平坦處"></div>
+            <div class="media-container"><img src="https://via.placeholder.com/400x300?text=周邊電桿距離" alt="電桿"></div>
+            <div class="media-container"><img src="https://via.placeholder.com/400x300?text=排水溝現況" alt="排水"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>地點位置</h2>
+        <div class="media-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d116704.97523275253!2d121.350!3d23.100!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346f0490b4d0812b%3A0x6280436531475752!2z5Y-w5p2x57ij5oiQ5Yqf6Y6u!5e0!3m2!1szh-TW!2stw!4v1700000000000!5m2!1szh-TW!2stw" loading="lazy"></iframe>
+        </div>
+        <p style="text-align:center; font-size:0.9rem;">
+            <a href="https://maps.google.com" target="_blank">📍 點我開啟 Google Maps 導航</a>
+        </p>
+    </div>
+
+    <div class="section" style="margin-bottom: 60px;">
+        <h2>常見問答 (FAQ)</h2>
+        
+        <div class="faq-item">
+            <div class="faq-q">Q: 租金可以便宜一點嗎？</div>
+            <div class="faq-a">A: 誠意長租（兩年以上）或一次付清一年，價格可談。</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q: 可以申請水電嗎？</div>
+            <div class="faq-a">A: 地主可配合簽署土地同意書，但「申請費用與規費」需由承租人負擔。</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q: 簽約怎麼簽？</div>
+            <div class="faq-a">A: 雙方見面簽約，需準備雙證件印章。我們會準備制式租賃合約保護雙方。</div>
+        </div>
+    </div>
+
+</div>
+
+<div class="action-bar">
+    <a href="https://line.me/ti/p/你的LINEID" target="_blank" class="btn btn-line">
+        LINE 聯繫
+    </a>
+    <a href="tel:0912345678" class="btn btn-tel">
+        📞 致電詢問
+    </a>
+</div>
+
+</body>
+</html>
